@@ -1,0 +1,139 @@
+<div class="flex p-6 mx-auto max-w-7xl">
+  <!-- Sección de productos -->
+  <div class="flex-1">
+    <h1 class="mb-4 text-2xl font-bold">Compra productos</h1>
+    <div
+      class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+    >
+      <div
+        *ngFor="let producto of productos"
+        class="p-4 border rounded shadow-md"
+      >
+        <p><strong>Código:</strong> {{ producto.codigo }}</p>
+        <p><strong>Nombre:</strong> {{ producto.nombre }}</p>
+        <p><strong>Cantidad:</strong> {{ producto.cantidad }}</p>
+        <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+        <button
+          (click)="agregarProducto(producto)"
+          class="w-full p-2 mt-2 text-white bg-blue-500 rounded hover:bg-red-600"
+        >
+          Agregar al carrito
+        </button>
+      </div>
+    </div>
+
+    <!-- Controles de paginación -->
+    <div class="flex justify-between mt-4">
+      <button
+        (click)="previousPage()"
+        [disabled]="page === 0"
+        class="p-2 text-white bg-gray-500 rounded"
+      >
+        Anterior
+      </button>
+      <span>Página {{ page + 1 }} de {{ totalPages }}</span>
+      <button
+        (click)="nextPage()"
+        [disabled]="page === totalPages - 1"
+        class="p-2 text-white bg-gray-500 rounded"
+      >
+        Siguiente
+      </button>
+      <div>
+        <input
+          type="number"
+          min="0"
+          [max]="totalPages - 1"
+          [(ngModel)]="page"
+          (change)="goToPage(page)"
+          class="p-2 border rounded"
+        />
+        <button
+          (click)="goToPage(page)"
+          class="p-2 text-white bg-green-500 rounded"
+        >
+          Ir a Página
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full max-w-md p-6 mx-auto bg-gray-100 border rounded-lg shadow-lg">
+    <form (ngSubmit)="realizarCompra()">
+      <h2 class="text-2xl font-semibold mb-6 text-center">Formulario de Compra</h2>
+
+      <!-- Nombre -->
+      <div class="form-group mb-4">
+        <label for="nombre" class="block text-gray-700 font-medium mb-2">Nombre:</label>
+        <input
+          type="text"
+          id="nombre"
+          class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          name="nombre"
+          [(ngModel)]="cliente.nombre"
+          required
+          minlength="2"
+          maxlength="100"
+          placeholder="Ingrese su nombre"
+        />
+        <div class="invalid-feedback text-red-500 text-sm mt-1">
+          El nombre del cliente debe tener entre 2 y 100 caracteres.
+        </div>
+      </div>
+
+      <!-- Correo -->
+      <div class="form-group mb-4">
+        <label for="correo" class="block text-gray-700 font-medium mb-2">Correo:</label>
+        <input
+          type="email"
+          id="correo"
+          class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          name="correo"
+          [(ngModel)]="cliente.correo"
+          required
+          minlength="5"
+          maxlength="100"
+          placeholder="Ingrese su correo"
+        />
+        <div class="invalid-feedback text-red-500 text-sm mt-1">
+          El correo del cliente debe tener entre 5 y 100 caracteres y ser válido.
+        </div>
+      </div>
+
+      <!-- Botón de Compra -->
+      <button
+        type="submit"
+        class="w-full p-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      >
+        Realizar Compra
+      </button>
+    </form>
+
+    <h2 class="mt-8 mb-4 text-xl font-bold text-center">Carrito de Compras</h2>
+
+    <div *ngIf="carrito.length === 0" class="text-center text-gray-500">
+      <p>No hay productos en el carrito.</p>
+    </div>
+
+    <div *ngFor="let producto of carrito" class="mb-4 p-4 border border-gray-300 rounded-md shadow-sm">
+      <p><strong>SKU:</strong> {{ producto.id | slice : 0 : 18 }}</p>
+      <p><strong>Nombre:</strong> {{ producto.nombre }}</p>
+      <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+      <p><strong>Cantidad:</strong> {{ producto.cantidad }}</p>
+      <button
+        (click)="eliminarProducto(producto.codigo)"
+        class="px-4 py-2 mt-2 text-white bg-red-500 rounded-md hover:bg-red-600"
+      >
+        Eliminar
+      </button>
+    </div>
+
+    <button
+      (click)="vaciarCarrito()"
+      class="w-full p-3 mt-4 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
+    >
+      Vaciar Carrito
+    </button>
+  </div>
+
+</div>

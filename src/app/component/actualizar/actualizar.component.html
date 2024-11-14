@@ -1,0 +1,71 @@
+<div class="max-w-4xl p-6 mx-auto">
+  <h1 class="mb-4 text-2xl font-bold">Actualizar Producto</h1>
+
+  <form
+    (ngSubmit)="actualizarProducto()"
+    class="p-6 mb-6 space-y-4 bg-white border rounded-lg shadow-lg"
+  >
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div>
+        <label for="nombre" class="block mb-1 text-sm font-medium text-gray-600"
+          >Nombre del Producto</label
+        >
+        <input
+          type="text"
+          id="nombre"
+          placeholder="Nombre del Producto"
+          [(ngModel)]="producto.nombre"
+          name="nombre"
+          class="w-full p-3 transition border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+      <div>
+        <label for="codigo" class="block mb-1 text-sm font-medium text-gray-600"
+          >Código del Producto</label
+        >
+        <input
+          type="text"
+          id="codigo"
+          placeholder="Código del Producto"
+          [(ngModel)]="producto.codigo"
+          name="codigo"
+          class="w-full p-3 transition border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+      <div>
+        <label
+          for="cantidad"
+          class="block mb-1 text-sm font-medium text-gray-600"
+          >Cantidad</label
+        >
+        <input
+          type="number"
+          id="cantidad"
+          placeholder="Cantidad"
+          [(ngModel)]="producto.cantidad"
+          name="cantidad"
+          class="w-full p-3 transition border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+      <div>
+        <label for="precio" class="block mb-1 text-sm font-medium text-gray-600"
+          >Precio</label
+        >
+        <input
+          type="number"
+          id="precio"
+          placeholder="Precio"
+          [(ngModel)]="producto.precio"
+          name="precio"
+          class="w-full p-3 transition border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+    </div>
+    <button
+      type="submit"
+      class="w-full py-3 text-white transition bg-blue-600 rounded-md hover:bg-blue-700"
+    >
+      Actualizar Producto
+    </button>
+  </form>
+</div>

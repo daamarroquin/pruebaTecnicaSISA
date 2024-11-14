@@ -1,0 +1,115 @@
+<div class="max-w-4xl p-6 mx-auto">
+  <h1 class="mb-4 text-2xl font-bold">Inventario de Productos</h1>
+
+  <!-- Formulario para crear producto -->
+  <form (submit)="crearProducto()" class="p-6 mb-6 space-y-4 bg-white border rounded-lg shadow-lg">
+    <h2 class="text-lg font-semibold text-gray-700">Crear Producto</h2>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div>
+        <label for="nombre" class="block mb-1 text-sm font-medium text-gray-600">Nombre del Producto</label>
+        <input
+          type="text"
+          id="nombre"
+          placeholder="Nombre del Producto"
+          [(ngModel)]="nuevoProducto.nombre"
+          name="nombre"
+          class="w-full p-3 transition border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+      <div>
+        <label for="codigo" class="block mb-1 text-sm font-medium text-gray-600">Código del Producto</label>
+        <input
+          type="text"
+          id="codigo"
+          placeholder="Código del Producto"
+          [(ngModel)]="nuevoProducto.codigo"
+          name="codigo"
+          class="w-full p-3 transition border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+      <div>
+        <label for="cantidad" class="block mb-1 text-sm font-medium text-gray-600">Cantidad</label>
+        <input
+          type="number"
+          id="cantidad"
+          placeholder="Cantidad"
+          [(ngModel)]="nuevoProducto.cantidad"
+          name="cantidad"
+          class="w-full p-3 transition border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+      <div>
+        <label for="precio" class="block mb-1 text-sm font-medium text-gray-600">Precio</label>
+        <input
+          type="number"
+          id="precio"
+          placeholder="Precio"
+          [(ngModel)]="nuevoProducto.precio"
+          name="precio"
+          class="w-full p-3 transition border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+    </div>
+    <button
+      type="submit"
+      class="w-full py-3 text-white transition bg-blue-600 rounded-md hover:bg-blue-700"
+    >
+      Crear Producto
+    </button>
+  </form>
+
+  <!-- Listado de productos -->
+  <div *ngFor="let producto of productos" class="p-4 mb-2 border">
+    <p><strong>Código:</strong> {{ producto.codigo }}</p>
+    <p><strong>Nombre:</strong> {{ producto.nombre }}</p>
+    <p><strong>Cantidad:</strong> {{ producto.cantidad }}</p>
+    <p><strong>Precio:</strong> {{ producto.precio }}</p>
+    <button
+      (click)="eliminarProducto(producto.id)"
+      class="p-2 mt-2 text-white bg-red-500"
+    >
+      Eliminar
+    </button>
+    <a
+      [routerLink]="['/producto/actualizar', producto.id]"
+      class="p-2 mt-2 text-white bg-green-500"
+    >
+      Actualizar
+    </a>
+  </div>
+
+  <!-- Controles de paginación -->
+  <div class="flex justify-between mt-4">
+    <button
+      (click)="previousPage()"
+      [disabled]="page === 0"
+      class="p-2 text-white bg-gray-500 rounded"
+    >
+      Anterior
+    </button>
+    <span>Página {{ page + 1 }} de {{ totalPages }}</span>
+    <button
+      (click)="nextPage()"
+      [disabled]="page === totalPages - 1"
+      class="p-2 text-white bg-gray-500 rounded"
+    >
+      Siguiente
+    </button>
+    <div>
+      <input
+        type="number"
+        min="0"
+        [max]="totalPages - 1"
+        [(ngModel)]="page"
+        (change)="goToPage(page)"
+        class="p-2 border rounded"
+      />
+      <button
+        (click)="goToPage(page)"
+        class="p-2 text-white bg-green-500 rounded"
+      >
+        Ir a Página
+      </button>
+    </div>
+  </div>
+</div>
