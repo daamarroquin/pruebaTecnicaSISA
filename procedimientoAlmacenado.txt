@@ -1,0 +1,34 @@
+CREATE OR REPLACE PROCEDURE actualizar_precio_producto (
+    p_codigo IN VARCHAR2,   -- Código del producto
+    p_precio IN NUMBER      -- Nuevo precio del producto
+)
+IS
+BEGIN
+    -- Verificar si el producto existe antes de realizar la actualización
+    DECLARE
+        v_count INTEGER;
+    BEGIN
+        -- Contamos cuántos productos con ese código existen
+        SELECT COUNT(*) INTO v_count
+        FROM T_PRODUCTO
+        WHERE codigo = p_codigo;
+
+        -- Si no se encuentra el producto, se lanza un error
+        IF v_count = 0 THEN
+            RAISE_APPLICATION_ERROR(-20001, 'El producto con código ' || p_codigo || ' no existe.');
+        ELSE
+            -- Si el producto existe, se actualiza el precio
+            UPDATE T_PRODUCTO
+            SET precio = p_precio
+            WHERE codigo = p_codigo;
+
+            -- Confirmamos que el precio fue actualizado correctamente
+            IF SQL%ROWCOUNT = 0 THEN
+                RAISE_APPLICATION_ERROR(-20002, 'No se pudo actualizar el precio del producto con código ' || p_codigo);
+            END IF;
+
+            DBMS_OUTPUT.PUT_LINE('El precio del producto con código ' || p_codigo || ' ha sido actualizado a ' || p_precio);
+        END IF;
+    END;
+END actualizar_precio_producto;
+
